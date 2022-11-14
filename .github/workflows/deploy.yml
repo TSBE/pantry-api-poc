@@ -16,6 +16,7 @@ jobs:
     # the 2nd condition
     # if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
+      - run: env
       - name: Setup .NET 6.0.x
         uses: actions/setup-dotnet@v3
         with:
