@@ -1,4 +1,5 @@
 name: continuous
+on:
   push:
     branches:
       - '**'
