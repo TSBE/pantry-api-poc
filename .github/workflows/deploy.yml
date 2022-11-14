@@ -1,0 +1,36 @@
+name: deploy
+on:
+  # the 1st condition
+  workflow_run:
+    workflows: ["continuous"]
+    branches: [main]
+    types:
+      - completed
+jobs:
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+    # the 2nd condition
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Setup .NET 6.0.x
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Restore
+        run: dotnet restore
+      - name: Build
+        run: dotnet build Pantry.sln --configuration Release --no-restore
+      - name: Publish
+        run: dotnet publish --configuration Release -o app/publish --no-restore
+      - name: Zip Folder
+        run: zip -r ${{ github.event.repository.name }}.zip app/publish/.
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: published-app
+          path: ${{ github.event.repository.name }}.zip
+      # - name: Jelastic Github Actions
+      #   uses: abhisek91/github-actions-jelastic@v2
