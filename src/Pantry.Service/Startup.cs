@@ -108,7 +108,10 @@ public class Startup
         services.AddDbContext<AppDbContext>(dbContextOptions);
 
         // Must be registered and started before any other hosted service that is using the database.
-        services.AddDatabaseMigrationHostedService<AppDbContext>();
+        if (!_environment.IsIntegrationTest())
+        {
+            services.AddDatabaseMigrationHostedService<AppDbContext>();
+        }
 
         // Add core features.
         services.AddWebFeature(Configuration);

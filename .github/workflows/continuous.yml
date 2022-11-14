@@ -1,0 +1,33 @@
+name: continuous
+  push:
+    branches:
+      - '**'
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+
+jobs:
+  build:
+    name: continuous
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup .NET 6.0.x
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Restore
+        run: dotnet restore
+      - name: Build
+        run: dotnet build Pantry.sln --configuration Release --no-restore
+      - name: Run unit tests
+        run: dotnet test --configuration Release --no-build --verbosity normal --logger trx --filter "Unit"
+      - name: Run integration tests
+        run: dotnet test --configuration Release --no-build --verbosity normal --logger trx --filter "Integration"
+      - name: Publish tests report
+        uses: dorny/test-reporter@v1.6.0
+        if: success() || failure()
+        with:
+          name: .NET Tests
+          path: '**/*.trx'
+          reporter: dotnet-trx
