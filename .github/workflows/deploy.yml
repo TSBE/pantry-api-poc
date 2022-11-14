@@ -33,8 +33,9 @@ jobs:
         with:
           name: published-app
           path: app/publish/
-      - name: Jelastic Github Actions
-        uses: abhisek91/github-actions-jelastic@v2
+      - name: Jelastic CLI
+        # uses: abhisek91/github-actions-jelastic@v2
+        uses: DovnarAlexander/github-actions-jelastic@v0.5.0
         with:
           jelastic_url:  ${{ secrets.JELASTIC_URL }}
           jelastic_username: ${{ secrets.JELASTIC_USERNAME }}
