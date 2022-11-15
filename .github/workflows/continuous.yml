@@ -11,10 +11,10 @@ jobs:
     name: build and test
     runs-on: ubuntu-latest
     steps:
-      - name: Setup .NET 6.0.x
+      - name: Setup .NET 7.0.x
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: 7.0.x
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Restore
