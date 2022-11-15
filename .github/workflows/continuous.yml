@@ -55,17 +55,3 @@ jobs:
         with:
           name: published-app
           path: app/publish/
-  deploy:
-    name: deploy to Jelastic
-    runs-on: ubuntu-latest
-    needs: publish
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
-    steps:
-      - name: Jelastic CLI
-        # uses: abhisek91/github-actions-jelastic@v2
-        uses: DovnarAlexander/github-actions-jelastic@master
-        with:
-          jelastic_url:  ${{ secrets.JELASTIC_URL }}
-          jelastic_username: ${{ secrets.JELASTIC_USERNAME }}
-          jelastic_password: ${{ secrets.JELASTIC_TOKEN }}
-          task: environment/deployment/deployarchive --envName ${{ secrets.JELASTIC_ENV_NAME }} --nodeGroup cp --fileUrl https://nightly.link/TSBE/pantry-api-poc/workflows/continuous/main/published-app.zip --fileName published-app.zip
