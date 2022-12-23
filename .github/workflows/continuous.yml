@@ -70,8 +70,8 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v3.2.0
         with:
-          context: ./src/Pantry.Service
-          file: src/Pantry.Service//Dockerfile
+          context: .
+          file: src/Pantry.Service/Dockerfile
           push: true
           no-cache: true
           tags: ${{ steps.meta.outputs.tags }}
