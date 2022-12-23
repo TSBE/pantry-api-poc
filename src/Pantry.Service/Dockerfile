@@ -1,9 +1,8 @@
-#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+FROM jelastic/dotnet:7.0.100 AS base
+WORKDIR /home/jelastic/APP/ROOT
+EXPOSE 22 80
 
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
-WORKDIR /app
-EXPOSE 80
+COPY app/publish/** .
 
-COPY app/publish/ .
-
-ENTRYPOINT ["dotnet", "Pantry.Service.dll"]
+#ENTRYPOINT ["/bin/sh"]
+#CMD ASPNETCORE_URLS=http://*:$PORT dotnet Pantry.Service.dll

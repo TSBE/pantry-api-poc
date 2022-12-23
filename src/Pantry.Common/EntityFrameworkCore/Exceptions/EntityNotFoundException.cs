@@ -9,7 +9,6 @@ namespace Pantry.Common.EntityFrameworkCore.Exceptions;
 /// </summary>
 [Serializable]
 public abstract class EntityNotFoundException : NotFoundException
-
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="EntityNotFoundException"/> class.
